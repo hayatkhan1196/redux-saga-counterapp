@@ -1,37 +1,35 @@
 import React, { Component } from "react";
 import "./App.css";
 import { connect } from "react-redux";
+import { increament } from './component/actionMethod'
 
 class App extends Component {
-
+  constructor(props) {
+    super(props);
+  }
   render() {
-    const { age, onAgeUp, onAgeDown } = this.props
-    return (
+    const { age, increament } = this.props
 
+    return (
       <div className="App">
         <div className="Age-label">
-          your age: <span>{age}</span>
+          your Age: <span>{age}</span>
         </div>
-        <button onClick={onAgeUp}>Age UP</button>
-        <button onClick={onAgeDown}>Age Down</button>
+        <button onClick={() => increament(age)}>takeEvery</button>   {/* send to action Method */}
+
+
       </div>
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    age: state.age
-  };
+const mapStateToProps = (state) => {
+  return { age: state.reducer.age }
 };
 
-const mapDispachToProps = dispatch => {
-  return {
-    onAgeUp: () => dispatch({ type: "AGE_UP", value: 1 }),
-    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
-  };
+const mapDispatchToProps = {
+  increament: increament,
 };
 export default connect(
   mapStateToProps,
-  mapDispachToProps
+  mapDispatchToProps
 )(App);

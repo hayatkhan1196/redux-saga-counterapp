@@ -1,10 +1,22 @@
-import { takeEvery, put } from "@redux-saga/core/effects";
-import delay from "redux-saga"
 
-function* ageUpAsync() {
+import delay from "redux-saga"
+import { takeLatest, put, all } from 'redux-saga/effects';
+import * as actionType from '../component/actions'
+
+function* ageUpAsync({ payload }) {
   yield delay(4000);
-  yield put({ type: 'AGE_UP_ASYNC', value: 1 })
+  payload = payload + 1
+  yield put({ type: actionType.INCREMENT_COUNT_RECEIVED, value: payload })
 }
 export function* WatchAgeUp() {
-  yield takeEvery('AGE_UP', ageUpAsync)
+  yield takeLatest(actionType.INCREMENT_COUNT_REQUEST, ageUpAsync)
+}
+
+export function* rootSaga() {
+  yield all([
+
+    WatchAgeUp()
+
+  ])
+
 }

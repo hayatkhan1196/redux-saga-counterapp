@@ -1,20 +1,24 @@
+import store from '.';
+import * as actionType from '../component/actions';
+
 const initialState = {
-    age: 20
+    age: 0,
+    count: 0
 };
 
-const reducer = (state = initialState, action) => {
-    const newState = { ...state };
+const reducer = (state = initialState, action = {}) => {
 
     switch (action.type) {
-        case 'AGE_UP_ASYNC':
-            newState.age += action.value;
-            break;
 
-        case 'AGE_DOWN':
-            newState.age -= action.value;
-            break;
+        case actionType.INCREMENT_COUNT_RECEIVED: {
+            state.age = action.value;
+            return { ...state };
+        }
+        default:
+            return state
+
     }
-    return newState;
+
 };
 
 export default reducer;

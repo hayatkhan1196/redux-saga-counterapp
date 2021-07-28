@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reducer from './store/reducer';
-import { WatchAgeUp } from './sagas/saga'
+import combineReducers from './store/index';
+import { rootSaga } from './sagas/saga'
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleWare from 'redux-saga'
 const SagaMiddleWare = createSagaMiddleWare()
-const store = createStore(reducer, applyMiddleware(SagaMiddleWare));
-SagaMiddleWare.run(WatchAgeUp);
+const store = createStore(combineReducers, composeWithDevTools(applyMiddleware(SagaMiddleWare)));
+SagaMiddleWare.run(rootSaga);
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
